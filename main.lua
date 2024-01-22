@@ -18,14 +18,14 @@ function love.load()
     -- Consumables
     consumables = {
         yellow = {
-            x = math.random(love.graphics.getWidth()),
-            y = math.random(love.graphics.getHeight()),
+            x = math.random(love.graphics.getWidth() - 50), -- Subtract the size of the consumable from the width
+            y = math.random(love.graphics.getHeight() - 50), -- Subtract the size of the consumable from the height
             speedIncrease = 50,
             size = 50
         },
         red = {
-            x = math.random(love.graphics.getWidth()),
-            y = math.random(love.graphics.getHeight()),
+            x = math.random(love.graphics.getWidth() - 75), -- Subtract the size of the consumable from the width
+            y = math.random(love.graphics.getHeight() - 75), -- Subtract the size of the consumable from the height
             speedIncrease = 100,
             size = 75
         }
