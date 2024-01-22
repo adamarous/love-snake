@@ -1,0 +1,18 @@
+# Ignore compiled Love2D game files
+*.love
+
+# Ignore temporary files
+*.swp
+*.bak
+*.tmp
+
+# Ignore build directories
+bin/
+build/
+
+# Ignore logs
+*.log
+
+# Ignore system files
+.DS_Store
+Thumbs.db
