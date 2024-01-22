@@ -11,13 +11,13 @@ local consumables = {
     yellow = {
         x = math.random(love.graphics.getWidth()),
         y = math.random(love.graphics.getHeight()),
-        speedIncrease = 1,
+        speedIncrease = 10,
         size = 10
     },
     red = {
         x = math.random(love.graphics.getWidth()),
         y = math.random(love.graphics.getHeight()),
-        speedIncrease = 5,
+        speedIncrease = 50,
         size = 10
     }
 }
@@ -88,6 +88,10 @@ function love.draw()
         local gameOverText = 'Game Over'
         local textWidth = love.graphics.getFont():getWidth(gameOverText)
         local textHeight = love.graphics.getFont():getHeight()
+
+        -- Enable anti-aliasing for crisp text rendering
+        local font = love.graphics.getFont()
+        font:setFilter("nearest", "nearest")
 
         love.graphics.print(gameOverText, love.graphics.getWidth() / 2 - textWidth / 2, love.graphics.getHeight() / 2 - textHeight / 2)
     end
