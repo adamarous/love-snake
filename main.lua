@@ -5,6 +5,8 @@ local consumables
 local gameStarted = false
 -- Initialize game
 local gameOver = false
+-- Define a minimum distance between the consumables
+local minimumDistance = 100
 
 function love.load()
     -- Player
@@ -20,20 +22,24 @@ function love.load()
         yellow = {
             speedIncrease = 50,
             size = 50
-            x = math.random(love.graphics.getWidth() - consumables.yellow.size), -- Subtract the size of the consumable from the width
-            y = math.random(love.graphics.getHeight() - consumables.yellow.size), -- Subtract the size of the consumable from the height
         },
         red = {
             speedIncrease = 100,
             size = 75
-            x = math.random(love.graphics.getWidth() - consumables.red.size), -- Subtract the size of the consumable from the width
-            y = math.random(love.graphics.getHeight() - consumables.red.size), -- Subtract the size of the consumable from the height
         }
     }
-end
 
--- Define a fixed time step
-local fixedDt = 1 / 60 -- 60 updates per second
+    -- Create a random seed for the random number generator
+    math.randomseed(os.time())
+
+    -- Set initial consumable positions
+    repeat
+        consumables.yellow.x = math.random(love.graphics.getWidth() - consumables.yellow.size) -- Subtract the size of the consumable from the width
+        consumables.yellow.y = math.random(love.graphics.getHeight() - consumables.yellow.size) -- Subtract the size of the consumable from the height
+        consumables.red.x = math.random(love.graphics.getWidth() - consumables.red.size) -- Subtract the size of the consumable from the width
+        consumables.red.y = math.random(love.graphics.getHeight() - consumables.red.size) -- Subtract the size of the consumable from the height
+    until math.sqrt((consumables.yellow.x + consumables.yellow.size/2 - consumables.red.x - consumables.red.size/2)^2 + (consumables.yellow.y + consumables.yellow.size/2 - consumables.red.y - consumables.red.size/2)^2) > minimumDistance
+end
 
 -- Define an accumulator for the elapsed time
 local accumulator = 0
@@ -78,8 +84,10 @@ function love.update(dt)
                 player.speed = player.speed + consumable.speedIncrease
 
                 -- Move consumable to new random location
-                consumable.x = math.random(love.graphics.getWidth())
-                consumable.y = math.random(love.graphics.getHeight())
+                repeat
+                    consumable.x = math.random(love.graphics.getWidth() - consumable.size)
+                    consumable.y = math.random(love.graphics.getHeight() - consumable.size)
+                until math.sqrt((consumables.yellow.x + consumables.yellow.size/2 - consumables.red.x - consumables.red.size/2)^2 + (consumables.yellow.y + consumables.yellow.size/2 - consumables.red.y - consumables.red.size/2)^2) > minimumDistance
             end
         end
 
