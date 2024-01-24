@@ -8,6 +8,14 @@ local gameOver = false
 -- Define a minimum distance between the consumables
 local minimumDistance = 100
 
+-- Set initial position of consumables
+local function setInitialPosition(consumable)
+    repeat
+        consumable.x = math.random(love.graphics.getWidth() - consumable.size)
+        consumable.y = math.random(love.graphics.getHeight() - consumable.size)
+    until math.sqrt((consumable.x + consumable.size/2 - player.x - player.size/2)^2 + (consumable.y + consumable.size/2 - player.y - player.size/2)^2) > minimumDistance
+end
+
 function love.load()
     -- Player
     player = {
@@ -33,12 +41,8 @@ function love.load()
     math.randomseed(os.time())
 
     -- Set initial consumable positions
-    repeat
-        consumables.yellow.x = math.random(love.graphics.getWidth() - consumables.yellow.size) -- Subtract the size of the consumable from the width
-        consumables.yellow.y = math.random(love.graphics.getHeight() - consumables.yellow.size) -- Subtract the size of the consumable from the height
-        consumables.red.x = math.random(love.graphics.getWidth() - consumables.red.size) -- Subtract the size of the consumable from the width
-        consumables.red.y = math.random(love.graphics.getHeight() - consumables.red.size) -- Subtract the size of the consumable from the height
-    until math.sqrt((consumables.yellow.x + consumables.yellow.size/2 - consumables.red.x - consumables.red.size/2)^2 + (consumables.yellow.y + consumables.yellow.size/2 - consumables.red.y - consumables.red.size/2)^2) > minimumDistance
+    setInitialPosition(consumables.yellow)
+    setInitialPosition(consumables.red)
 end
 
 -- Define an accumulator for the elapsed time
