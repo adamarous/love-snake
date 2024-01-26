@@ -1,6 +1,8 @@
+require 'entities'
+
 -- Global variables
-local player
-local consumables
+local player = Player(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2, 100, 50)
+local consumables = {yellow = Consumable('yellow'), red = Consumable('red')}
 -- Game state
 local gameStarted = false
 -- Initialize game
@@ -17,25 +19,9 @@ local function setInitialPosition(consumable)
 end
 
 function love.load()
-    -- Player
-    player = {
-        x = love.graphics.getWidth() / 2,
-        y = love.graphics.getHeight() / 2,
-        speed = 100,
-        size = 50
-    }
-
-    -- Consumables
-    consumables = {
-        yellow = {
-            speedIncrease = 50,
-            size = 50
-        },
-        red = {
-            speedIncrease = 100,
-            size = 75
-        }
-    }
+    -- Set initial position of player
+    player.x = love.graphics.getWidth() / 2
+    player.y = love.graphics.getHeight() / 2
 
     -- Create a random seed for the random number generator
     math.randomseed(os.time())
